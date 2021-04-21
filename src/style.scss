@@ -1,16 +1,23 @@
+$border-color: #BDBDBD;
 
 .app {
   margin-top: 40px;
 }
 
 .editor {
-  border: 1px solid #BDBDBD;
+  border: 1px solid $border-color;
   border-radius: 10px;
   padding: 10px;
-  textarea {
+  textarea, input {
     width: 100%;
     border: none;
     outline: none;
+    &::placeholder {
+      color: $border-color;
+    }
+  }
+  input {
+    font-size: 1.2em;
   }
   &-actions {
     display: flex;
@@ -28,7 +35,13 @@
       border-radius: 50%;
       margin-right: 10px;
       cursor: pointer;
+      &.selected {
+        border: 3px solid $border-color;
+      }
     }
+  }
+  &-error {
+    color: red;
   }
 }
 
@@ -37,5 +50,18 @@
   &-item {
     border-radius: 10px;
     padding: 10px;
+    position: relative;
+  }
+  &-remove {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    line-height: 0.6;
+    font-size: 1.3em;
+    cursor: pointer;
+    color: $border-color;
+    &:hover {
+      color: #000;
+    }
   }
 }
