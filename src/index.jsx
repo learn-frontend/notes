@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './style.scss';
@@ -48,7 +48,7 @@ const NoteEditor = (props) => {
 
   return (
     <div className="row">
-      <form className="editor col-4 offset-4" onSubmit={onSubmit}>
+      <form className="editor col-lg-4 offset-lg-4 col-md-6 offset-md-3" onSubmit={onSubmit}>
         <input type="text" placeholder="Введите заголовок" value={title} onChange={onChange} name="title" />
         <textarea rows="5" placeholder="Введите текст заметки" value={text} onChange={onChange} name="text" />
         {error && <p className="editor-error">{error}</p>}
@@ -69,7 +69,7 @@ const NoteList = (props) => (
   <div className="notes">
     <div className="row g-3">
       {props.list.map((note) => (
-        <div key={note.id} className="col-3">
+        <div key={note.id} className="col-lg-3 col-md-6 col-sm-12">
           <div className="notes-item" style={{ background: note.color }}>
             <h5 className="notes-title">{note.title}</h5>
             <div className="notes-text">{note.text}</div>
@@ -82,7 +82,11 @@ const NoteList = (props) => (
 );
 
 const App = () => {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : []);
+
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(list));
+  }, [list]);
 
   const onClick = (event) => {
     const id = Number(event.target.dataset.id);
